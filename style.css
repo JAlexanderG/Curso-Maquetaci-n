@@ -92,6 +92,75 @@ p {
 }
 
 /* *** 3. Components *** */
+/*************** Carousel *******************/
+@keyframes carousel-slide {
+  0% {
+    transform: translateX(0%);
+  }
+  25% {
+    transform: translateX(-25%);
+  }
+  50% {
+    transform: translateX(-50%);
+  }
+  75% {
+    transform: translateX(-75%);
+  }
+}
+
+.carousel {
+  margin: 2rem auto;
+  padding: 2rem 0;
+  max-width: 800px;
+  text-align: center;
+  overflow-x: hidden;
+  background-color: var(--carousel-bg-color);
+}
+
+.carousel .slides {
+  padding-left: 0;
+  /* 100% por cada slide */
+  width: 400%;
+  display: flex;
+  list-style: none; /*para quitar las bullets de los li*/
+  transition: transform 0.5s ease-in-out;
+  animation: carousel-slide 12s ease-in-out 3s;
+}
+
+.carousel input {
+  display: none;
+}
+
+.carousel label {
+  border: medium solid var(--gray-dark-color);
+  border-radius: 50%;
+  margin: 0 0.25rem;
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  cursor: pointer;
+}
+
+#slide-1:checked ~ .slides {
+  transform: translateX(0%);
+}
+#slide-2:checked ~ .slides {
+  transform: translateX(-25%);
+}
+#slide-3:checked ~ .slides {
+  transform: translateX(-50%);
+}
+#slide-4:checked ~ .slides {
+  transform: translateX(-75%);
+}
+
+#slide-1:checked ~ .slides-nav label#dot-1,
+#slide-2:checked ~ .slides-nav label#dot-2,
+#slide-3:checked ~ .slides-nav label#dot-3,
+#slide-4:checked ~ .slides-nav label#dot-4 {
+  background-color: var(--gray-dark-color);
+}
+
 /*Hero Image*/
 .hero-image {
   background-image: var(--hero-image);
@@ -160,7 +229,7 @@ p {
   background-color: var(--first-color);
 }
 
-@media screen and (min-width: 1020px) {
+@media screen and (min-width: 1024px) {
   .menu-btn {
     display: none;
   }
@@ -186,7 +255,84 @@ p {
   }
 }
 
+/* ************ Modal ****************/
+.modal {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--black-alpha-color);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 1s;
+}
+
+.modal-content {
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.modal-close svg {
+  width: 3rem;
+  height: 3rem;
+  fill: var(--first-color);
+}
+
+/*se va a activar cuando el target de esta página este con este id*/
+/*Que cualquier id que comience con trabajo va a funcionar*/
+.modal[id|="trabajo"]:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ********** ProgressBar ************/
+
+progress {
+  width: 100%;
+  height: 1rem;
+  background-color: var(--gray-color);
+}
+
+progress::-webkit-progress-bar {
+  background-color: var(--gray-color);
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--gray-dark-color);
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--gray-dark-color);
+}
+
+.progress {
+  margin: 1rem auto;
+}
+
+.progress > p {
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  font: 0.85rem;
+}
+
 /* *** 4. Utilities *** */
+.avatar {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+}
+
 .btn {
   border-radius: 0.5rem;
   padding: 1rem;
@@ -197,6 +343,10 @@ p {
   text-decoration: none;
   color: var(--white-color);
   background-color: var(--first-color);
+}
+
+.bg-gray-light {
+  background-color: var(--gray-light-color);
 }
 
 .box-shadow-1 {
@@ -210,11 +360,68 @@ p {
   max-width: var(--max-width);
 }
 
+.gray-scale {
+  filter: grayscale(1);
+}
+
 .none {
   display: none;
 }
 
-/* *** 5. Site Styles *** */
+.section {
+  padding: 2rem 1rem;
+}
+
+.section-title {
+  border-top: thin solid var(--first-color);
+  border-bottom: thin solid var(--first-color);
+  margin: 2rem auto;
+  padding: 0.5rem 1rem;
+  width: 250px;
+  text-align: center;
+  color: var(--title-color);
+}
+
+.text-first-color {
+  color: var(--first-color);
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+@media screen and (min-width: 1024px) {
+  .full-lg-screen {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .text-lg-left {
+    text-align: left;
+  }
+
+  .text-lg-center {
+    text-align: center;
+  }
+
+  .text-lg-right {
+    text-align: right;
+  }
+}
+
+/* *** 5. Styles Sitie *** */
+.about > article {
+  margin-bottom: 2rem;
+}
+
 .header {
   position: fixed;
   left: 0;
@@ -239,14 +446,149 @@ p {
   text-decoration: none;
 }
 
+.portfolio-card {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  display: block;
+}
+
+.portfolio-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.portfolio-card-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  background-color: var(--first-alpha-color);
+  color: var(--white-color);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease-in-out;
+}
+
+.portfolio-card:hover .portfolio-card-info {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.portfolio-card-info div {
+  padding: 1rem;
+  border: thin solid var(--white-color);
+  width: 100%;
+  height: 100%;
+}
+
+.portfolio-datails {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  grid-auto-rows: 1.25rem;
+}
+
+.portfolio-datails b {
+  color: var(--first-color);
+}
+
+.portfolio-info h3 {
+  border-bottom: medium solid var(--first-color);
+  margin: 1rem auto;
+  padding: 0.5rem 0;
+  color: var(--title-color);
+}
+
+.portfolio-modal {
+  padding: 1rem;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white-color);
+}
+
+.service-card {
+  margin: 1rem auto;
+  padding: 1rem;
+  text-align: center;
+}
+
+.service-card h3 {
+  color: var(--title-color);
+}
+
+.service-card svg {
+  margin-bottom: 1.25rem;
+  fill: var(--first-color);
+}
+
 @media screen and (min-width: 768px) {
+  .portfolio > .container {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+  }
+
+  .portfolio-modal {
+    max-width: 800px;
+    flex-direction: row;
+  }
+
+  .portfolio-info {
+    margin: 1rem;
+    align-self: center;
+  }
+
+  .portfolio .section-title {
+    grid-column: span 2;
+  }
+
+  .services > .container {
+    display: grid;
+    grid-template-columns: repeat(2, 45%);
+    justify-content: space-between;
+    align-content: center;
+  }
+
+  .services .section-title {
+    grid-column: span 2;
+  }
 }
 
 @media screen and (min-width: 1024px) {
+  .about {
+    display: grid;
+    grid-template-columns: repeat(3, 30%);
+    justify-content: space-between;
+    align-content: center;
+    padding-top: 4rem; /*Extra, no quedaba bien al momento de ir a esta sección*/
+    /* align-items: center; */
+  }
+
   .header {
     position: sticky;
     top: 0;
     padding: 0.5rem;
     height: calc(var(--header-height) - 0.5rem);
   }
+
+  .portfolio > .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .portfolio .section-title {
+    grid-column: span 3;
+  }
+
+  .services > .container {
+    grid-template-columns: repeat(3, 30%);
+  }
+
+  .services .section-title {
+    grid-column: span 3;
+  }
 }
+
+/* min 3:24:00 */
